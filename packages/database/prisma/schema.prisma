@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  STUDENT
+  FACULTY
+  ADMIN
+}
+
+enum SubmissionStatus {
+  PENDING
+  ACCEPTED
+  WRONG_ANSWER
+  COMPILE_ERROR
+  RUNTIME_ERROR
+}
+
+enum ViolationType {
+  TAB_SWITCH
+  FULLSCREEN_EXIT
+  COPY_PASTE
+  MULTIPLE_FACES
+  NO_FACE
+}
+
+model User {
+  id             String          @id @default(uuid())
+  email          String          @unique
+  name           String
+  password       String
+  role           UserRole        @default(STUDENT)
+  submissions    Submission[]
+  proctoringLogs ProctoringLog[]
+  examsCreated   Exam[]          @relation("FacultyExams")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model Exam {
+  id          String          @id @default(uuid())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  durationMin Int
+  isActive    Boolean         @default(false)
+  accessCode  String?
+  creatorId   String
+  creator     User            @relation("FacultyExams", fields: [creatorId], references: [id])
+  questions   Question[]
+  submissions Submission[]
+  logs        ProctoringLog[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model Question {
+  id           String       @id @default(uuid())
+  title        String
+  description  String
+  sampleInput  String?
+  sampleOutput String?
+  testCases    Json
+  examId       String
+  exam         Exam         @relation(fields: [examId], references: [id])
+  submissions  Submission[]
+}
+
+model Submission {
+  id          String           @id @default(uuid())
+  code        String
+  language    String
+  status      SubmissionStatus @default(PENDING)
+  stdOut      String?
+  stdErr      String?
+  passedCount Int              @default(0)
+  userId      String
+  user        User             @relation(fields: [userId], references: [id])
+  examId      String
+  exam        Exam             @relation(fields: [examId], references: [id])
+  questionId  String
+  question    Question         @relation(fields: [questionId], references: [id])
+  submittedAt DateTime         @default(now())
+}
+
+model ProctoringLog {
+  id            String        @id @default(uuid())
+  violationType ViolationType
+  details       String?
+  snapshotUrl   String?
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  examId        String
+  exam          Exam          @relation(fields: [examId], references: [id])
+  timestamp     DateTime      @default(now())
+}

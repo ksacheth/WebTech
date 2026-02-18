@@ -4,6 +4,7 @@
 node_modules
 .pnp
 .pnp.js
+CLAUDE.md
 
 # Local env files
 .env
