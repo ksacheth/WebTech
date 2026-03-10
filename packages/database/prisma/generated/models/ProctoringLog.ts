@@ -29,8 +29,7 @@ export type ProctoringLogMinAggregateOutputType = {
   violationType: $Enums.ViolationType | null
   details: string | null
   snapshotUrl: string | null
-  userId: string | null
-  examId: string | null
+  attemptId: string | null
   timestamp: Date | null
 }
 
@@ -39,8 +38,7 @@ export type ProctoringLogMaxAggregateOutputType = {
   violationType: $Enums.ViolationType | null
   details: string | null
   snapshotUrl: string | null
-  userId: string | null
-  examId: string | null
+  attemptId: string | null
   timestamp: Date | null
 }
 
@@ -49,8 +47,7 @@ export type ProctoringLogCountAggregateOutputType = {
   violationType: number
   details: number
   snapshotUrl: number
-  userId: number
-  examId: number
+  attemptId: number
   timestamp: number
   _all: number
 }
@@ -61,8 +58,7 @@ export type ProctoringLogMinAggregateInputType = {
   violationType?: true
   details?: true
   snapshotUrl?: true
-  userId?: true
-  examId?: true
+  attemptId?: true
   timestamp?: true
 }
 
@@ -71,8 +67,7 @@ export type ProctoringLogMaxAggregateInputType = {
   violationType?: true
   details?: true
   snapshotUrl?: true
-  userId?: true
-  examId?: true
+  attemptId?: true
   timestamp?: true
 }
 
@@ -81,8 +76,7 @@ export type ProctoringLogCountAggregateInputType = {
   violationType?: true
   details?: true
   snapshotUrl?: true
-  userId?: true
-  examId?: true
+  attemptId?: true
   timestamp?: true
   _all?: true
 }
@@ -164,8 +158,7 @@ export type ProctoringLogGroupByOutputType = {
   violationType: $Enums.ViolationType
   details: string | null
   snapshotUrl: string | null
-  userId: string
-  examId: string
+  attemptId: string
   timestamp: Date
   _count: ProctoringLogCountAggregateOutputType | null
   _min: ProctoringLogMinAggregateOutputType | null
@@ -195,11 +188,9 @@ export type ProctoringLogWhereInput = {
   violationType?: Prisma.EnumViolationTypeFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
-  userId?: Prisma.StringFilter<"ProctoringLog"> | string
-  examId?: Prisma.StringFilter<"ProctoringLog"> | string
+  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeFilter<"ProctoringLog"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  exam?: Prisma.XOR<Prisma.ExamScalarRelationFilter, Prisma.ExamWhereInput>
+  attempt?: Prisma.XOR<Prisma.ExamAttemptScalarRelationFilter, Prisma.ExamAttemptWhereInput>
 }
 
 export type ProctoringLogOrderByWithRelationInput = {
@@ -207,11 +198,9 @@ export type ProctoringLogOrderByWithRelationInput = {
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrderInput | Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
-  exam?: Prisma.ExamOrderByWithRelationInput
+  attempt?: Prisma.ExamAttemptOrderByWithRelationInput
 }
 
 export type ProctoringLogWhereUniqueInput = Prisma.AtLeast<{
@@ -222,11 +211,9 @@ export type ProctoringLogWhereUniqueInput = Prisma.AtLeast<{
   violationType?: Prisma.EnumViolationTypeFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
-  userId?: Prisma.StringFilter<"ProctoringLog"> | string
-  examId?: Prisma.StringFilter<"ProctoringLog"> | string
+  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeFilter<"ProctoringLog"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  exam?: Prisma.XOR<Prisma.ExamScalarRelationFilter, Prisma.ExamWhereInput>
+  attempt?: Prisma.XOR<Prisma.ExamAttemptScalarRelationFilter, Prisma.ExamAttemptWhereInput>
 }, "id">
 
 export type ProctoringLogOrderByWithAggregationInput = {
@@ -234,8 +221,7 @@ export type ProctoringLogOrderByWithAggregationInput = {
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrderInput | Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   _count?: Prisma.ProctoringLogCountOrderByAggregateInput
   _max?: Prisma.ProctoringLogMaxOrderByAggregateInput
@@ -250,8 +236,7 @@ export type ProctoringLogScalarWhereWithAggregatesInput = {
   violationType?: Prisma.EnumViolationTypeWithAggregatesFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableWithAggregatesFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableWithAggregatesFilter<"ProctoringLog"> | string | null
-  userId?: Prisma.StringWithAggregatesFilter<"ProctoringLog"> | string
-  examId?: Prisma.StringWithAggregatesFilter<"ProctoringLog"> | string
+  attemptId?: Prisma.StringWithAggregatesFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"ProctoringLog"> | Date | string
 }
 
@@ -261,8 +246,7 @@ export type ProctoringLogCreateInput = {
   details?: string | null
   snapshotUrl?: string | null
   timestamp?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutProctoringLogsInput
-  exam: Prisma.ExamCreateNestedOneWithoutLogsInput
+  attempt: Prisma.ExamAttemptCreateNestedOneWithoutLogsInput
 }
 
 export type ProctoringLogUncheckedCreateInput = {
@@ -270,8 +254,7 @@ export type ProctoringLogUncheckedCreateInput = {
   violationType: $Enums.ViolationType
   details?: string | null
   snapshotUrl?: string | null
-  userId: string
-  examId: string
+  attemptId: string
   timestamp?: Date | string
 }
 
@@ -281,8 +264,7 @@ export type ProctoringLogUpdateInput = {
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutProctoringLogsNestedInput
-  exam?: Prisma.ExamUpdateOneRequiredWithoutLogsNestedInput
+  attempt?: Prisma.ExamAttemptUpdateOneRequiredWithoutLogsNestedInput
 }
 
 export type ProctoringLogUncheckedUpdateInput = {
@@ -290,8 +272,7 @@ export type ProctoringLogUncheckedUpdateInput = {
   violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  examId?: Prisma.StringFieldUpdateOperationsInput | string
+  attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -300,8 +281,7 @@ export type ProctoringLogCreateManyInput = {
   violationType: $Enums.ViolationType
   details?: string | null
   snapshotUrl?: string | null
-  userId: string
-  examId: string
+  attemptId: string
   timestamp?: Date | string
 }
 
@@ -318,8 +298,7 @@ export type ProctoringLogUncheckedUpdateManyInput = {
   violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  examId?: Prisma.StringFieldUpdateOperationsInput | string
+  attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -338,8 +317,7 @@ export type ProctoringLogCountOrderByAggregateInput = {
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -348,8 +326,7 @@ export type ProctoringLogMaxOrderByAggregateInput = {
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -358,92 +335,49 @@ export type ProctoringLogMinOrderByAggregateInput = {
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
-export type ProctoringLogCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutUserInput, Prisma.ProctoringLogUncheckedCreateWithoutUserInput> | Prisma.ProctoringLogCreateWithoutUserInput[] | Prisma.ProctoringLogUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutUserInput | Prisma.ProctoringLogCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ProctoringLogCreateManyUserInputEnvelope
+export type ProctoringLogCreateNestedManyWithoutAttemptInput = {
+  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutAttemptInput, Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput> | Prisma.ProctoringLogCreateWithoutAttemptInput[] | Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput[]
+  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput | Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput[]
+  createMany?: Prisma.ProctoringLogCreateManyAttemptInputEnvelope
   connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
 }
 
-export type ProctoringLogUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutUserInput, Prisma.ProctoringLogUncheckedCreateWithoutUserInput> | Prisma.ProctoringLogCreateWithoutUserInput[] | Prisma.ProctoringLogUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutUserInput | Prisma.ProctoringLogCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ProctoringLogCreateManyUserInputEnvelope
+export type ProctoringLogUncheckedCreateNestedManyWithoutAttemptInput = {
+  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutAttemptInput, Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput> | Prisma.ProctoringLogCreateWithoutAttemptInput[] | Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput[]
+  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput | Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput[]
+  createMany?: Prisma.ProctoringLogCreateManyAttemptInputEnvelope
   connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
 }
 
-export type ProctoringLogUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutUserInput, Prisma.ProctoringLogUncheckedCreateWithoutUserInput> | Prisma.ProctoringLogCreateWithoutUserInput[] | Prisma.ProctoringLogUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutUserInput | Prisma.ProctoringLogCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ProctoringLogUpsertWithWhereUniqueWithoutUserInput | Prisma.ProctoringLogUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ProctoringLogCreateManyUserInputEnvelope
+export type ProctoringLogUpdateManyWithoutAttemptNestedInput = {
+  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutAttemptInput, Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput> | Prisma.ProctoringLogCreateWithoutAttemptInput[] | Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput[]
+  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput | Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput[]
+  upsert?: Prisma.ProctoringLogUpsertWithWhereUniqueWithoutAttemptInput | Prisma.ProctoringLogUpsertWithWhereUniqueWithoutAttemptInput[]
+  createMany?: Prisma.ProctoringLogCreateManyAttemptInputEnvelope
   set?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
   disconnect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
   delete?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
   connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  update?: Prisma.ProctoringLogUpdateWithWhereUniqueWithoutUserInput | Prisma.ProctoringLogUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ProctoringLogUpdateManyWithWhereWithoutUserInput | Prisma.ProctoringLogUpdateManyWithWhereWithoutUserInput[]
+  update?: Prisma.ProctoringLogUpdateWithWhereUniqueWithoutAttemptInput | Prisma.ProctoringLogUpdateWithWhereUniqueWithoutAttemptInput[]
+  updateMany?: Prisma.ProctoringLogUpdateManyWithWhereWithoutAttemptInput | Prisma.ProctoringLogUpdateManyWithWhereWithoutAttemptInput[]
   deleteMany?: Prisma.ProctoringLogScalarWhereInput | Prisma.ProctoringLogScalarWhereInput[]
 }
 
-export type ProctoringLogUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutUserInput, Prisma.ProctoringLogUncheckedCreateWithoutUserInput> | Prisma.ProctoringLogCreateWithoutUserInput[] | Prisma.ProctoringLogUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutUserInput | Prisma.ProctoringLogCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ProctoringLogUpsertWithWhereUniqueWithoutUserInput | Prisma.ProctoringLogUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ProctoringLogCreateManyUserInputEnvelope
+export type ProctoringLogUncheckedUpdateManyWithoutAttemptNestedInput = {
+  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutAttemptInput, Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput> | Prisma.ProctoringLogCreateWithoutAttemptInput[] | Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput[]
+  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput | Prisma.ProctoringLogCreateOrConnectWithoutAttemptInput[]
+  upsert?: Prisma.ProctoringLogUpsertWithWhereUniqueWithoutAttemptInput | Prisma.ProctoringLogUpsertWithWhereUniqueWithoutAttemptInput[]
+  createMany?: Prisma.ProctoringLogCreateManyAttemptInputEnvelope
   set?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
   disconnect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
   delete?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
   connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  update?: Prisma.ProctoringLogUpdateWithWhereUniqueWithoutUserInput | Prisma.ProctoringLogUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ProctoringLogUpdateManyWithWhereWithoutUserInput | Prisma.ProctoringLogUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ProctoringLogScalarWhereInput | Prisma.ProctoringLogScalarWhereInput[]
-}
-
-export type ProctoringLogCreateNestedManyWithoutExamInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutExamInput, Prisma.ProctoringLogUncheckedCreateWithoutExamInput> | Prisma.ProctoringLogCreateWithoutExamInput[] | Prisma.ProctoringLogUncheckedCreateWithoutExamInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutExamInput | Prisma.ProctoringLogCreateOrConnectWithoutExamInput[]
-  createMany?: Prisma.ProctoringLogCreateManyExamInputEnvelope
-  connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-}
-
-export type ProctoringLogUncheckedCreateNestedManyWithoutExamInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutExamInput, Prisma.ProctoringLogUncheckedCreateWithoutExamInput> | Prisma.ProctoringLogCreateWithoutExamInput[] | Prisma.ProctoringLogUncheckedCreateWithoutExamInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutExamInput | Prisma.ProctoringLogCreateOrConnectWithoutExamInput[]
-  createMany?: Prisma.ProctoringLogCreateManyExamInputEnvelope
-  connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-}
-
-export type ProctoringLogUpdateManyWithoutExamNestedInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutExamInput, Prisma.ProctoringLogUncheckedCreateWithoutExamInput> | Prisma.ProctoringLogCreateWithoutExamInput[] | Prisma.ProctoringLogUncheckedCreateWithoutExamInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutExamInput | Prisma.ProctoringLogCreateOrConnectWithoutExamInput[]
-  upsert?: Prisma.ProctoringLogUpsertWithWhereUniqueWithoutExamInput | Prisma.ProctoringLogUpsertWithWhereUniqueWithoutExamInput[]
-  createMany?: Prisma.ProctoringLogCreateManyExamInputEnvelope
-  set?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  disconnect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  delete?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  update?: Prisma.ProctoringLogUpdateWithWhereUniqueWithoutExamInput | Prisma.ProctoringLogUpdateWithWhereUniqueWithoutExamInput[]
-  updateMany?: Prisma.ProctoringLogUpdateManyWithWhereWithoutExamInput | Prisma.ProctoringLogUpdateManyWithWhereWithoutExamInput[]
-  deleteMany?: Prisma.ProctoringLogScalarWhereInput | Prisma.ProctoringLogScalarWhereInput[]
-}
-
-export type ProctoringLogUncheckedUpdateManyWithoutExamNestedInput = {
-  create?: Prisma.XOR<Prisma.ProctoringLogCreateWithoutExamInput, Prisma.ProctoringLogUncheckedCreateWithoutExamInput> | Prisma.ProctoringLogCreateWithoutExamInput[] | Prisma.ProctoringLogUncheckedCreateWithoutExamInput[]
-  connectOrCreate?: Prisma.ProctoringLogCreateOrConnectWithoutExamInput | Prisma.ProctoringLogCreateOrConnectWithoutExamInput[]
-  upsert?: Prisma.ProctoringLogUpsertWithWhereUniqueWithoutExamInput | Prisma.ProctoringLogUpsertWithWhereUniqueWithoutExamInput[]
-  createMany?: Prisma.ProctoringLogCreateManyExamInputEnvelope
-  set?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  disconnect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  delete?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  connect?: Prisma.ProctoringLogWhereUniqueInput | Prisma.ProctoringLogWhereUniqueInput[]
-  update?: Prisma.ProctoringLogUpdateWithWhereUniqueWithoutExamInput | Prisma.ProctoringLogUpdateWithWhereUniqueWithoutExamInput[]
-  updateMany?: Prisma.ProctoringLogUpdateManyWithWhereWithoutExamInput | Prisma.ProctoringLogUpdateManyWithWhereWithoutExamInput[]
+  update?: Prisma.ProctoringLogUpdateWithWhereUniqueWithoutAttemptInput | Prisma.ProctoringLogUpdateWithWhereUniqueWithoutAttemptInput[]
+  updateMany?: Prisma.ProctoringLogUpdateManyWithWhereWithoutAttemptInput | Prisma.ProctoringLogUpdateManyWithWhereWithoutAttemptInput[]
   deleteMany?: Prisma.ProctoringLogScalarWhereInput | Prisma.ProctoringLogScalarWhereInput[]
 }
 
@@ -451,48 +385,46 @@ export type EnumViolationTypeFieldUpdateOperationsInput = {
   set?: $Enums.ViolationType
 }
 
-export type ProctoringLogCreateWithoutUserInput = {
+export type ProctoringLogCreateWithoutAttemptInput = {
   id?: string
   violationType: $Enums.ViolationType
   details?: string | null
   snapshotUrl?: string | null
   timestamp?: Date | string
-  exam: Prisma.ExamCreateNestedOneWithoutLogsInput
 }
 
-export type ProctoringLogUncheckedCreateWithoutUserInput = {
+export type ProctoringLogUncheckedCreateWithoutAttemptInput = {
   id?: string
   violationType: $Enums.ViolationType
   details?: string | null
   snapshotUrl?: string | null
-  examId: string
   timestamp?: Date | string
 }
 
-export type ProctoringLogCreateOrConnectWithoutUserInput = {
+export type ProctoringLogCreateOrConnectWithoutAttemptInput = {
   where: Prisma.ProctoringLogWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProctoringLogCreateWithoutUserInput, Prisma.ProctoringLogUncheckedCreateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ProctoringLogCreateWithoutAttemptInput, Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput>
 }
 
-export type ProctoringLogCreateManyUserInputEnvelope = {
-  data: Prisma.ProctoringLogCreateManyUserInput | Prisma.ProctoringLogCreateManyUserInput[]
+export type ProctoringLogCreateManyAttemptInputEnvelope = {
+  data: Prisma.ProctoringLogCreateManyAttemptInput | Prisma.ProctoringLogCreateManyAttemptInput[]
   skipDuplicates?: boolean
 }
 
-export type ProctoringLogUpsertWithWhereUniqueWithoutUserInput = {
+export type ProctoringLogUpsertWithWhereUniqueWithoutAttemptInput = {
   where: Prisma.ProctoringLogWhereUniqueInput
-  update: Prisma.XOR<Prisma.ProctoringLogUpdateWithoutUserInput, Prisma.ProctoringLogUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.ProctoringLogCreateWithoutUserInput, Prisma.ProctoringLogUncheckedCreateWithoutUserInput>
+  update: Prisma.XOR<Prisma.ProctoringLogUpdateWithoutAttemptInput, Prisma.ProctoringLogUncheckedUpdateWithoutAttemptInput>
+  create: Prisma.XOR<Prisma.ProctoringLogCreateWithoutAttemptInput, Prisma.ProctoringLogUncheckedCreateWithoutAttemptInput>
 }
 
-export type ProctoringLogUpdateWithWhereUniqueWithoutUserInput = {
+export type ProctoringLogUpdateWithWhereUniqueWithoutAttemptInput = {
   where: Prisma.ProctoringLogWhereUniqueInput
-  data: Prisma.XOR<Prisma.ProctoringLogUpdateWithoutUserInput, Prisma.ProctoringLogUncheckedUpdateWithoutUserInput>
+  data: Prisma.XOR<Prisma.ProctoringLogUpdateWithoutAttemptInput, Prisma.ProctoringLogUncheckedUpdateWithoutAttemptInput>
 }
 
-export type ProctoringLogUpdateManyWithWhereWithoutUserInput = {
+export type ProctoringLogUpdateManyWithWhereWithoutAttemptInput = {
   where: Prisma.ProctoringLogScalarWhereInput
-  data: Prisma.XOR<Prisma.ProctoringLogUpdateManyMutationInput, Prisma.ProctoringLogUncheckedUpdateManyWithoutUserInput>
+  data: Prisma.XOR<Prisma.ProctoringLogUpdateManyMutationInput, Prisma.ProctoringLogUncheckedUpdateManyWithoutAttemptInput>
 }
 
 export type ProctoringLogScalarWhereInput = {
@@ -503,124 +435,39 @@ export type ProctoringLogScalarWhereInput = {
   violationType?: Prisma.EnumViolationTypeFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
-  userId?: Prisma.StringFilter<"ProctoringLog"> | string
-  examId?: Prisma.StringFilter<"ProctoringLog"> | string
+  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeFilter<"ProctoringLog"> | Date | string
 }
 
-export type ProctoringLogCreateWithoutExamInput = {
+export type ProctoringLogCreateManyAttemptInput = {
   id?: string
   violationType: $Enums.ViolationType
   details?: string | null
   snapshotUrl?: string | null
   timestamp?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutProctoringLogsInput
 }
 
-export type ProctoringLogUncheckedCreateWithoutExamInput = {
-  id?: string
-  violationType: $Enums.ViolationType
-  details?: string | null
-  snapshotUrl?: string | null
-  userId: string
-  timestamp?: Date | string
-}
-
-export type ProctoringLogCreateOrConnectWithoutExamInput = {
-  where: Prisma.ProctoringLogWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProctoringLogCreateWithoutExamInput, Prisma.ProctoringLogUncheckedCreateWithoutExamInput>
-}
-
-export type ProctoringLogCreateManyExamInputEnvelope = {
-  data: Prisma.ProctoringLogCreateManyExamInput | Prisma.ProctoringLogCreateManyExamInput[]
-  skipDuplicates?: boolean
-}
-
-export type ProctoringLogUpsertWithWhereUniqueWithoutExamInput = {
-  where: Prisma.ProctoringLogWhereUniqueInput
-  update: Prisma.XOR<Prisma.ProctoringLogUpdateWithoutExamInput, Prisma.ProctoringLogUncheckedUpdateWithoutExamInput>
-  create: Prisma.XOR<Prisma.ProctoringLogCreateWithoutExamInput, Prisma.ProctoringLogUncheckedCreateWithoutExamInput>
-}
-
-export type ProctoringLogUpdateWithWhereUniqueWithoutExamInput = {
-  where: Prisma.ProctoringLogWhereUniqueInput
-  data: Prisma.XOR<Prisma.ProctoringLogUpdateWithoutExamInput, Prisma.ProctoringLogUncheckedUpdateWithoutExamInput>
-}
-
-export type ProctoringLogUpdateManyWithWhereWithoutExamInput = {
-  where: Prisma.ProctoringLogScalarWhereInput
-  data: Prisma.XOR<Prisma.ProctoringLogUpdateManyMutationInput, Prisma.ProctoringLogUncheckedUpdateManyWithoutExamInput>
-}
-
-export type ProctoringLogCreateManyUserInput = {
-  id?: string
-  violationType: $Enums.ViolationType
-  details?: string | null
-  snapshotUrl?: string | null
-  examId: string
-  timestamp?: Date | string
-}
-
-export type ProctoringLogUpdateWithoutUserInput = {
+export type ProctoringLogUpdateWithoutAttemptInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  exam?: Prisma.ExamUpdateOneRequiredWithoutLogsNestedInput
 }
 
-export type ProctoringLogUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
-  details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  examId?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ProctoringLogUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
-  details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  examId?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ProctoringLogCreateManyExamInput = {
-  id?: string
-  violationType: $Enums.ViolationType
-  details?: string | null
-  snapshotUrl?: string | null
-  userId: string
-  timestamp?: Date | string
-}
-
-export type ProctoringLogUpdateWithoutExamInput = {
+export type ProctoringLogUncheckedUpdateWithoutAttemptInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutProctoringLogsNestedInput
 }
 
-export type ProctoringLogUncheckedUpdateWithoutExamInput = {
+export type ProctoringLogUncheckedUpdateManyWithoutAttemptInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ProctoringLogUncheckedUpdateManyWithoutExamInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
-  details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -631,11 +478,9 @@ export type ProctoringLogSelect<ExtArgs extends runtime.Types.Extensions.Interna
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  userId?: boolean
-  examId?: boolean
+  attemptId?: boolean
   timestamp?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proctoringLog"]>
 
 export type ProctoringLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -643,11 +488,9 @@ export type ProctoringLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  userId?: boolean
-  examId?: boolean
+  attemptId?: boolean
   timestamp?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proctoringLog"]>
 
 export type ProctoringLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -655,11 +498,9 @@ export type ProctoringLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  userId?: boolean
-  examId?: boolean
+  attemptId?: boolean
   timestamp?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proctoringLog"]>
 
 export type ProctoringLogSelectScalar = {
@@ -667,38 +508,32 @@ export type ProctoringLogSelectScalar = {
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  userId?: boolean
-  examId?: boolean
+  attemptId?: boolean
   timestamp?: boolean
 }
 
-export type ProctoringLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "violationType" | "details" | "snapshotUrl" | "userId" | "examId" | "timestamp", ExtArgs["result"]["proctoringLog"]>
+export type ProctoringLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "violationType" | "details" | "snapshotUrl" | "attemptId" | "timestamp", ExtArgs["result"]["proctoringLog"]>
 export type ProctoringLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }
 export type ProctoringLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }
 export type ProctoringLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }
 
 export type $ProctoringLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProctoringLog"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
-    exam: Prisma.$ExamPayload<ExtArgs>
+    attempt: Prisma.$ExamAttemptPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     violationType: $Enums.ViolationType
     details: string | null
     snapshotUrl: string | null
-    userId: string
-    examId: string
+    attemptId: string
     timestamp: Date
   }, ExtArgs["result"]["proctoringLog"]>
   composites: {}
@@ -1094,8 +929,7 @@ readonly fields: ProctoringLogFieldRefs;
  */
 export interface Prisma__ProctoringLogClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  exam<T extends Prisma.ExamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExamDefaultArgs<ExtArgs>>): Prisma.Prisma__ExamClient<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  attempt<T extends Prisma.ExamAttemptDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExamAttemptDefaultArgs<ExtArgs>>): Prisma.Prisma__ExamAttemptClient<runtime.Types.Result.GetResult<Prisma.$ExamAttemptPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1129,8 +963,7 @@ export interface ProctoringLogFieldRefs {
   readonly violationType: Prisma.FieldRef<"ProctoringLog", 'ViolationType'>
   readonly details: Prisma.FieldRef<"ProctoringLog", 'String'>
   readonly snapshotUrl: Prisma.FieldRef<"ProctoringLog", 'String'>
-  readonly userId: Prisma.FieldRef<"ProctoringLog", 'String'>
-  readonly examId: Prisma.FieldRef<"ProctoringLog", 'String'>
+  readonly attemptId: Prisma.FieldRef<"ProctoringLog", 'String'>
   readonly timestamp: Prisma.FieldRef<"ProctoringLog", 'DateTime'>
 }
     

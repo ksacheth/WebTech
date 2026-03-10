@@ -18,12 +18,24 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const ExamAttemptStatus = {
+  ENROLLED: 'ENROLLED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  DISQUALIFIED: 'DISQUALIFIED'
+} as const
+
+export type ExamAttemptStatus = (typeof ExamAttemptStatus)[keyof typeof ExamAttemptStatus]
+
+
 export const SubmissionStatus = {
   PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED',
   WRONG_ANSWER: 'WRONG_ANSWER',
   COMPILE_ERROR: 'COMPILE_ERROR',
-  RUNTIME_ERROR: 'RUNTIME_ERROR'
+  RUNTIME_ERROR: 'RUNTIME_ERROR',
+  TIME_LIMIT_EXCEEDED: 'TIME_LIMIT_EXCEEDED',
+  MEMORY_LIMIT_EXCEEDED: 'MEMORY_LIMIT_EXCEEDED'
 } as const
 
 export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]
@@ -34,7 +46,22 @@ export const ViolationType = {
   FULLSCREEN_EXIT: 'FULLSCREEN_EXIT',
   COPY_PASTE: 'COPY_PASTE',
   MULTIPLE_FACES: 'MULTIPLE_FACES',
-  NO_FACE: 'NO_FACE'
+  NO_FACE: 'NO_FACE',
+  OTHER: 'OTHER'
 } as const
 
 export type ViolationType = (typeof ViolationType)[keyof typeof ViolationType]
+
+
+export const ProgrammingLanguage = {
+  C: 'C',
+  CPP: 'CPP',
+  JAVA: 'JAVA',
+  PYTHON3: 'PYTHON3',
+  JAVASCRIPT: 'JAVASCRIPT',
+  TYPESCRIPT: 'TYPESCRIPT',
+  GO: 'GO',
+  RUST: 'RUST'
+} as const
+
+export type ProgrammingLanguage = (typeof ProgrammingLanguage)[keyof typeof ProgrammingLanguage]

@@ -20,66 +20,112 @@ export type QuestionModel = runtime.Types.Result.DefaultSelection<Prisma.$Questi
 
 export type AggregateQuestion = {
   _count: QuestionCountAggregateOutputType | null
+  _avg: QuestionAvgAggregateOutputType | null
+  _sum: QuestionSumAggregateOutputType | null
   _min: QuestionMinAggregateOutputType | null
   _max: QuestionMaxAggregateOutputType | null
 }
 
+export type QuestionAvgAggregateOutputType = {
+  marks: number | null
+  timeLimitMs: number | null
+  memoryLimitKb: number | null
+  orderIndex: number | null
+}
+
+export type QuestionSumAggregateOutputType = {
+  marks: number | null
+  timeLimitMs: number | null
+  memoryLimitKb: number | null
+  orderIndex: number | null
+}
+
 export type QuestionMinAggregateOutputType = {
   id: string | null
+  examId: string | null
   title: string | null
   description: string | null
-  sampleInput: string | null
-  sampleOutput: string | null
-  examId: string | null
+  marks: number | null
+  timeLimitMs: number | null
+  memoryLimitKb: number | null
+  orderIndex: number | null
+  deletedAt: Date | null
 }
 
 export type QuestionMaxAggregateOutputType = {
   id: string | null
+  examId: string | null
   title: string | null
   description: string | null
-  sampleInput: string | null
-  sampleOutput: string | null
-  examId: string | null
+  marks: number | null
+  timeLimitMs: number | null
+  memoryLimitKb: number | null
+  orderIndex: number | null
+  deletedAt: Date | null
 }
 
 export type QuestionCountAggregateOutputType = {
   id: number
+  examId: number
   title: number
   description: number
-  sampleInput: number
-  sampleOutput: number
-  testCases: number
-  examId: number
+  marks: number
+  timeLimitMs: number
+  memoryLimitKb: number
+  orderIndex: number
+  deletedAt: number
   _all: number
 }
 
 
+export type QuestionAvgAggregateInputType = {
+  marks?: true
+  timeLimitMs?: true
+  memoryLimitKb?: true
+  orderIndex?: true
+}
+
+export type QuestionSumAggregateInputType = {
+  marks?: true
+  timeLimitMs?: true
+  memoryLimitKb?: true
+  orderIndex?: true
+}
+
 export type QuestionMinAggregateInputType = {
   id?: true
+  examId?: true
   title?: true
   description?: true
-  sampleInput?: true
-  sampleOutput?: true
-  examId?: true
+  marks?: true
+  timeLimitMs?: true
+  memoryLimitKb?: true
+  orderIndex?: true
+  deletedAt?: true
 }
 
 export type QuestionMaxAggregateInputType = {
   id?: true
+  examId?: true
   title?: true
   description?: true
-  sampleInput?: true
-  sampleOutput?: true
-  examId?: true
+  marks?: true
+  timeLimitMs?: true
+  memoryLimitKb?: true
+  orderIndex?: true
+  deletedAt?: true
 }
 
 export type QuestionCountAggregateInputType = {
   id?: true
+  examId?: true
   title?: true
   description?: true
-  sampleInput?: true
-  sampleOutput?: true
-  testCases?: true
-  examId?: true
+  marks?: true
+  timeLimitMs?: true
+  memoryLimitKb?: true
+  orderIndex?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -121,6 +167,18 @@ export type QuestionAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: QuestionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: QuestionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: QuestionMinAggregateInputType
@@ -151,19 +209,25 @@ export type QuestionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: QuestionCountAggregateInputType | true
+  _avg?: QuestionAvgAggregateInputType
+  _sum?: QuestionSumAggregateInputType
   _min?: QuestionMinAggregateInputType
   _max?: QuestionMaxAggregateInputType
 }
 
 export type QuestionGroupByOutputType = {
   id: string
+  examId: string
   title: string
   description: string
-  sampleInput: string | null
-  sampleOutput: string | null
-  testCases: runtime.JsonValue
-  examId: string
+  marks: number
+  timeLimitMs: number
+  memoryLimitKb: number
+  orderIndex: number
+  deletedAt: Date | null
   _count: QuestionCountAggregateOutputType | null
+  _avg: QuestionAvgAggregateOutputType | null
+  _sum: QuestionSumAggregateOutputType | null
   _min: QuestionMinAggregateOutputType | null
   _max: QuestionMaxAggregateOutputType | null
 }
@@ -188,25 +252,31 @@ export type QuestionWhereInput = {
   OR?: Prisma.QuestionWhereInput[]
   NOT?: Prisma.QuestionWhereInput | Prisma.QuestionWhereInput[]
   id?: Prisma.StringFilter<"Question"> | string
+  examId?: Prisma.StringFilter<"Question"> | string
   title?: Prisma.StringFilter<"Question"> | string
   description?: Prisma.StringFilter<"Question"> | string
-  sampleInput?: Prisma.StringNullableFilter<"Question"> | string | null
-  sampleOutput?: Prisma.StringNullableFilter<"Question"> | string | null
-  testCases?: Prisma.JsonFilter<"Question">
-  examId?: Prisma.StringFilter<"Question"> | string
+  marks?: Prisma.FloatFilter<"Question"> | number
+  timeLimitMs?: Prisma.IntFilter<"Question"> | number
+  memoryLimitKb?: Prisma.IntFilter<"Question"> | number
+  orderIndex?: Prisma.IntFilter<"Question"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"Question"> | Date | string | null
   exam?: Prisma.XOR<Prisma.ExamScalarRelationFilter, Prisma.ExamWhereInput>
+  testCases?: Prisma.TestCaseListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
 }
 
 export type QuestionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  examId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  sampleInput?: Prisma.SortOrderInput | Prisma.SortOrder
-  sampleOutput?: Prisma.SortOrderInput | Prisma.SortOrder
-  testCases?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitKb?: Prisma.SortOrder
+  orderIndex?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   exam?: Prisma.ExamOrderByWithRelationInput
+  testCases?: Prisma.TestCaseOrderByRelationAggregateInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
 }
 
@@ -215,27 +285,34 @@ export type QuestionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.QuestionWhereInput | Prisma.QuestionWhereInput[]
   OR?: Prisma.QuestionWhereInput[]
   NOT?: Prisma.QuestionWhereInput | Prisma.QuestionWhereInput[]
+  examId?: Prisma.StringFilter<"Question"> | string
   title?: Prisma.StringFilter<"Question"> | string
   description?: Prisma.StringFilter<"Question"> | string
-  sampleInput?: Prisma.StringNullableFilter<"Question"> | string | null
-  sampleOutput?: Prisma.StringNullableFilter<"Question"> | string | null
-  testCases?: Prisma.JsonFilter<"Question">
-  examId?: Prisma.StringFilter<"Question"> | string
+  marks?: Prisma.FloatFilter<"Question"> | number
+  timeLimitMs?: Prisma.IntFilter<"Question"> | number
+  memoryLimitKb?: Prisma.IntFilter<"Question"> | number
+  orderIndex?: Prisma.IntFilter<"Question"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"Question"> | Date | string | null
   exam?: Prisma.XOR<Prisma.ExamScalarRelationFilter, Prisma.ExamWhereInput>
+  testCases?: Prisma.TestCaseListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
 }, "id">
 
 export type QuestionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  examId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  sampleInput?: Prisma.SortOrderInput | Prisma.SortOrder
-  sampleOutput?: Prisma.SortOrderInput | Prisma.SortOrder
-  testCases?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitKb?: Prisma.SortOrder
+  orderIndex?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.QuestionCountOrderByAggregateInput
+  _avg?: Prisma.QuestionAvgOrderByAggregateInput
   _max?: Prisma.QuestionMaxOrderByAggregateInput
   _min?: Prisma.QuestionMinOrderByAggregateInput
+  _sum?: Prisma.QuestionSumOrderByAggregateInput
 }
 
 export type QuestionScalarWhereWithAggregatesInput = {
@@ -243,33 +320,41 @@ export type QuestionScalarWhereWithAggregatesInput = {
   OR?: Prisma.QuestionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.QuestionScalarWhereWithAggregatesInput | Prisma.QuestionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Question"> | string
+  examId?: Prisma.StringWithAggregatesFilter<"Question"> | string
   title?: Prisma.StringWithAggregatesFilter<"Question"> | string
   description?: Prisma.StringWithAggregatesFilter<"Question"> | string
-  sampleInput?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
-  sampleOutput?: Prisma.StringNullableWithAggregatesFilter<"Question"> | string | null
-  testCases?: Prisma.JsonWithAggregatesFilter<"Question">
-  examId?: Prisma.StringWithAggregatesFilter<"Question"> | string
+  marks?: Prisma.FloatWithAggregatesFilter<"Question"> | number
+  timeLimitMs?: Prisma.IntWithAggregatesFilter<"Question"> | number
+  memoryLimitKb?: Prisma.IntWithAggregatesFilter<"Question"> | number
+  orderIndex?: Prisma.IntWithAggregatesFilter<"Question"> | number
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Question"> | Date | string | null
 }
 
 export type QuestionCreateInput = {
   id?: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
   exam: Prisma.ExamCreateNestedOneWithoutQuestionsInput
+  testCases?: Prisma.TestCaseCreateNestedManyWithoutQuestionInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionUncheckedCreateInput = {
   id?: string
+  examId: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  examId: string
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
+  testCases?: Prisma.TestCaseUncheckedCreateNestedManyWithoutQuestionInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutQuestionInput
 }
 
@@ -277,51 +362,63 @@ export type QuestionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   exam?: Prisma.ExamUpdateOneRequiredWithoutQuestionsNestedInput
+  testCases?: Prisma.TestCaseUpdateManyWithoutQuestionNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  examId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  examId?: Prisma.StringFieldUpdateOperationsInput | string
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  testCases?: Prisma.TestCaseUncheckedUpdateManyWithoutQuestionNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionCreateManyInput = {
   id?: string
+  examId: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  examId: string
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
 }
 
 export type QuestionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type QuestionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  examId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  examId?: Prisma.StringFieldUpdateOperationsInput | string
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type QuestionListRelationFilter = {
@@ -336,30 +433,52 @@ export type QuestionOrderByRelationAggregateInput = {
 
 export type QuestionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  examId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  sampleInput?: Prisma.SortOrder
-  sampleOutput?: Prisma.SortOrder
-  testCases?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitKb?: Prisma.SortOrder
+  orderIndex?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type QuestionAvgOrderByAggregateInput = {
+  marks?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitKb?: Prisma.SortOrder
+  orderIndex?: Prisma.SortOrder
 }
 
 export type QuestionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  examId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  sampleInput?: Prisma.SortOrder
-  sampleOutput?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitKb?: Prisma.SortOrder
+  orderIndex?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type QuestionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  examId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  sampleInput?: Prisma.SortOrder
-  sampleOutput?: Prisma.SortOrder
-  examId?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitKb?: Prisma.SortOrder
+  orderIndex?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type QuestionSumOrderByAggregateInput = {
+  marks?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitKb?: Prisma.SortOrder
+  orderIndex?: Prisma.SortOrder
 }
 
 export type QuestionScalarRelationFilter = {
@@ -409,6 +528,28 @@ export type QuestionUncheckedUpdateManyWithoutExamNestedInput = {
   deleteMany?: Prisma.QuestionScalarWhereInput | Prisma.QuestionScalarWhereInput[]
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type QuestionCreateNestedOneWithoutTestCasesInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutTestCasesInput, Prisma.QuestionUncheckedCreateWithoutTestCasesInput>
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutTestCasesInput
+  connect?: Prisma.QuestionWhereUniqueInput
+}
+
+export type QuestionUpdateOneRequiredWithoutTestCasesNestedInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutTestCasesInput, Prisma.QuestionUncheckedCreateWithoutTestCasesInput>
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutTestCasesInput
+  upsert?: Prisma.QuestionUpsertWithoutTestCasesInput
+  connect?: Prisma.QuestionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuestionUpdateToOneWithWhereWithoutTestCasesInput, Prisma.QuestionUpdateWithoutTestCasesInput>, Prisma.QuestionUncheckedUpdateWithoutTestCasesInput>
+}
+
 export type QuestionCreateNestedOneWithoutSubmissionsInput = {
   create?: Prisma.XOR<Prisma.QuestionCreateWithoutSubmissionsInput, Prisma.QuestionUncheckedCreateWithoutSubmissionsInput>
   connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutSubmissionsInput
@@ -427,9 +568,12 @@ export type QuestionCreateWithoutExamInput = {
   id?: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
+  testCases?: Prisma.TestCaseCreateNestedManyWithoutQuestionInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutQuestionInput
 }
 
@@ -437,9 +581,12 @@ export type QuestionUncheckedCreateWithoutExamInput = {
   id?: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
+  testCases?: Prisma.TestCaseUncheckedCreateNestedManyWithoutQuestionInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutQuestionInput
 }
 
@@ -474,32 +621,108 @@ export type QuestionScalarWhereInput = {
   OR?: Prisma.QuestionScalarWhereInput[]
   NOT?: Prisma.QuestionScalarWhereInput | Prisma.QuestionScalarWhereInput[]
   id?: Prisma.StringFilter<"Question"> | string
+  examId?: Prisma.StringFilter<"Question"> | string
   title?: Prisma.StringFilter<"Question"> | string
   description?: Prisma.StringFilter<"Question"> | string
-  sampleInput?: Prisma.StringNullableFilter<"Question"> | string | null
-  sampleOutput?: Prisma.StringNullableFilter<"Question"> | string | null
-  testCases?: Prisma.JsonFilter<"Question">
-  examId?: Prisma.StringFilter<"Question"> | string
+  marks?: Prisma.FloatFilter<"Question"> | number
+  timeLimitMs?: Prisma.IntFilter<"Question"> | number
+  memoryLimitKb?: Prisma.IntFilter<"Question"> | number
+  orderIndex?: Prisma.IntFilter<"Question"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"Question"> | Date | string | null
+}
+
+export type QuestionCreateWithoutTestCasesInput = {
+  id?: string
+  title: string
+  description: string
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
+  exam: Prisma.ExamCreateNestedOneWithoutQuestionsInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionUncheckedCreateWithoutTestCasesInput = {
+  id?: string
+  examId: string
+  title: string
+  description: string
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionCreateOrConnectWithoutTestCasesInput = {
+  where: Prisma.QuestionWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutTestCasesInput, Prisma.QuestionUncheckedCreateWithoutTestCasesInput>
+}
+
+export type QuestionUpsertWithoutTestCasesInput = {
+  update: Prisma.XOR<Prisma.QuestionUpdateWithoutTestCasesInput, Prisma.QuestionUncheckedUpdateWithoutTestCasesInput>
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutTestCasesInput, Prisma.QuestionUncheckedCreateWithoutTestCasesInput>
+  where?: Prisma.QuestionWhereInput
+}
+
+export type QuestionUpdateToOneWithWhereWithoutTestCasesInput = {
+  where?: Prisma.QuestionWhereInput
+  data: Prisma.XOR<Prisma.QuestionUpdateWithoutTestCasesInput, Prisma.QuestionUncheckedUpdateWithoutTestCasesInput>
+}
+
+export type QuestionUpdateWithoutTestCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  exam?: Prisma.ExamUpdateOneRequiredWithoutQuestionsNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutQuestionNestedInput
+}
+
+export type QuestionUncheckedUpdateWithoutTestCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  examId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionCreateWithoutSubmissionsInput = {
   id?: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
   exam: Prisma.ExamCreateNestedOneWithoutQuestionsInput
+  testCases?: Prisma.TestCaseCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionUncheckedCreateWithoutSubmissionsInput = {
   id?: string
+  examId: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  examId: string
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
+  testCases?: Prisma.TestCaseUncheckedCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionCreateOrConnectWithoutSubmissionsInput = {
@@ -522,38 +745,49 @@ export type QuestionUpdateWithoutSubmissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   exam?: Prisma.ExamUpdateOneRequiredWithoutQuestionsNestedInput
+  testCases?: Prisma.TestCaseUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionUncheckedUpdateWithoutSubmissionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  examId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  examId?: Prisma.StringFieldUpdateOperationsInput | string
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  testCases?: Prisma.TestCaseUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionCreateManyExamInput = {
   id?: string
   title: string
   description: string
-  sampleInput?: string | null
-  sampleOutput?: string | null
-  testCases: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: number
+  timeLimitMs?: number
+  memoryLimitKb?: number
+  orderIndex: number
+  deletedAt?: Date | string | null
 }
 
 export type QuestionUpdateWithoutExamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  testCases?: Prisma.TestCaseUpdateManyWithoutQuestionNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutQuestionNestedInput
 }
 
@@ -561,9 +795,12 @@ export type QuestionUncheckedUpdateWithoutExamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  testCases?: Prisma.TestCaseUncheckedUpdateManyWithoutQuestionNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
@@ -571,9 +808,11 @@ export type QuestionUncheckedUpdateManyWithoutExamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  sampleInput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  sampleOutput?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  testCases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  marks?: Prisma.FloatFieldUpdateOperationsInput | number
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitKb?: Prisma.IntFieldUpdateOperationsInput | number
+  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -582,10 +821,12 @@ export type QuestionUncheckedUpdateManyWithoutExamInput = {
  */
 
 export type QuestionCountOutputType = {
+  testCases: number
   submissions: number
 }
 
 export type QuestionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  testCases?: boolean | QuestionCountOutputTypeCountTestCasesArgs
   submissions?: boolean | QuestionCountOutputTypeCountSubmissionsArgs
 }
 
@@ -602,6 +843,13 @@ export type QuestionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * QuestionCountOutputType without action
  */
+export type QuestionCountOutputTypeCountTestCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TestCaseWhereInput
+}
+
+/**
+ * QuestionCountOutputType without action
+ */
 export type QuestionCountOutputTypeCountSubmissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SubmissionWhereInput
 }
@@ -609,52 +857,62 @@ export type QuestionCountOutputTypeCountSubmissionsArgs<ExtArgs extends runtime.
 
 export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  examId?: boolean
   title?: boolean
   description?: boolean
-  sampleInput?: boolean
-  sampleOutput?: boolean
-  testCases?: boolean
-  examId?: boolean
+  marks?: boolean
+  timeLimitMs?: boolean
+  memoryLimitKb?: boolean
+  orderIndex?: boolean
+  deletedAt?: boolean
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  testCases?: boolean | Prisma.Question$testCasesArgs<ExtArgs>
   submissions?: boolean | Prisma.Question$submissionsArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
 
 export type QuestionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  examId?: boolean
   title?: boolean
   description?: boolean
-  sampleInput?: boolean
-  sampleOutput?: boolean
-  testCases?: boolean
-  examId?: boolean
+  marks?: boolean
+  timeLimitMs?: boolean
+  memoryLimitKb?: boolean
+  orderIndex?: boolean
+  deletedAt?: boolean
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
 
 export type QuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  examId?: boolean
   title?: boolean
   description?: boolean
-  sampleInput?: boolean
-  sampleOutput?: boolean
-  testCases?: boolean
-  examId?: boolean
+  marks?: boolean
+  timeLimitMs?: boolean
+  memoryLimitKb?: boolean
+  orderIndex?: boolean
+  deletedAt?: boolean
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
 
 export type QuestionSelectScalar = {
   id?: boolean
+  examId?: boolean
   title?: boolean
   description?: boolean
-  sampleInput?: boolean
-  sampleOutput?: boolean
-  testCases?: boolean
-  examId?: boolean
+  marks?: boolean
+  timeLimitMs?: boolean
+  memoryLimitKb?: boolean
+  orderIndex?: boolean
+  deletedAt?: boolean
 }
 
-export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "sampleInput" | "sampleOutput" | "testCases" | "examId", ExtArgs["result"]["question"]>
+export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "examId" | "title" | "description" | "marks" | "timeLimitMs" | "memoryLimitKb" | "orderIndex" | "deletedAt", ExtArgs["result"]["question"]>
 export type QuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   exam?: boolean | Prisma.ExamDefaultArgs<ExtArgs>
+  testCases?: boolean | Prisma.Question$testCasesArgs<ExtArgs>
   submissions?: boolean | Prisma.Question$submissionsArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -669,16 +927,19 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Question"
   objects: {
     exam: Prisma.$ExamPayload<ExtArgs>
+    testCases: Prisma.$TestCasePayload<ExtArgs>[]
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    examId: string
     title: string
     description: string
-    sampleInput: string | null
-    sampleOutput: string | null
-    testCases: runtime.JsonValue
-    examId: string
+    marks: number
+    timeLimitMs: number
+    memoryLimitKb: number
+    orderIndex: number
+    deletedAt: Date | null
   }, ExtArgs["result"]["question"]>
   composites: {}
 }
@@ -1074,6 +1335,7 @@ readonly fields: QuestionFieldRefs;
 export interface Prisma__QuestionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   exam<T extends Prisma.ExamDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ExamDefaultArgs<ExtArgs>>): Prisma.Prisma__ExamClient<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  testCases<T extends Prisma.Question$testCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$testCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   submissions<T extends Prisma.Question$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1105,12 +1367,14 @@ export interface Prisma__QuestionClient<T, Null = never, ExtArgs extends runtime
  */
 export interface QuestionFieldRefs {
   readonly id: Prisma.FieldRef<"Question", 'String'>
+  readonly examId: Prisma.FieldRef<"Question", 'String'>
   readonly title: Prisma.FieldRef<"Question", 'String'>
   readonly description: Prisma.FieldRef<"Question", 'String'>
-  readonly sampleInput: Prisma.FieldRef<"Question", 'String'>
-  readonly sampleOutput: Prisma.FieldRef<"Question", 'String'>
-  readonly testCases: Prisma.FieldRef<"Question", 'Json'>
-  readonly examId: Prisma.FieldRef<"Question", 'String'>
+  readonly marks: Prisma.FieldRef<"Question", 'Float'>
+  readonly timeLimitMs: Prisma.FieldRef<"Question", 'Int'>
+  readonly memoryLimitKb: Prisma.FieldRef<"Question", 'Int'>
+  readonly orderIndex: Prisma.FieldRef<"Question", 'Int'>
+  readonly deletedAt: Prisma.FieldRef<"Question", 'DateTime'>
 }
     
 
@@ -1504,6 +1768,30 @@ export type QuestionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Questions to delete.
    */
   limit?: number
+}
+
+/**
+ * Question.testCases
+ */
+export type Question$testCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TestCase
+   */
+  select?: Prisma.TestCaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TestCase
+   */
+  omit?: Prisma.TestCaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TestCaseInclude<ExtArgs> | null
+  where?: Prisma.TestCaseWhereInput
+  orderBy?: Prisma.TestCaseOrderByWithRelationInput | Prisma.TestCaseOrderByWithRelationInput[]
+  cursor?: Prisma.TestCaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TestCaseScalarFieldEnum | Prisma.TestCaseScalarFieldEnum[]
 }
 
 /**

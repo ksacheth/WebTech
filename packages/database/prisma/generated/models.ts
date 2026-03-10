@@ -10,7 +10,10 @@
  */
 export type * from './models/User.ts'
 export type * from './models/Exam.ts'
+export type * from './models/ExamAttempt.ts'
 export type * from './models/Question.ts'
+export type * from './models/TestCase.ts'
 export type * from './models/Submission.ts'
+export type * from './models/SubmissionTestCaseResult.ts'
 export type * from './models/ProctoringLog.ts'
 export type * from './commonInputTypes.ts'

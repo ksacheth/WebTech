@@ -50,15 +50,30 @@ export type User = Prisma.UserModel
  */
 export type Exam = Prisma.ExamModel
 /**
+ * Model ExamAttempt
+ * 
+ */
+export type ExamAttempt = Prisma.ExamAttemptModel
+/**
  * Model Question
  * 
  */
 export type Question = Prisma.QuestionModel
 /**
+ * Model TestCase
+ * 
+ */
+export type TestCase = Prisma.TestCaseModel
+/**
  * Model Submission
  * 
  */
 export type Submission = Prisma.SubmissionModel
+/**
+ * Model SubmissionTestCaseResult
+ * 
+ */
+export type SubmissionTestCaseResult = Prisma.SubmissionTestCaseResultModel
 /**
  * Model ProctoringLog
  * 

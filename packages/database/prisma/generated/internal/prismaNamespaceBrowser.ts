@@ -53,8 +53,11 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Exam: 'Exam',
+  ExamAttempt: 'ExamAttempt',
   Question: 'Question',
+  TestCase: 'TestCase',
   Submission: 'Submission',
+  SubmissionTestCaseResult: 'SubmissionTestCaseResult',
   ProctoringLog: 'ProctoringLog'
 } as const
 
@@ -98,40 +101,87 @@ export const ExamScalarFieldEnum = {
   accessCode: 'accessCode',
   creatorId: 'creatorId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
 export type ExamScalarFieldEnum = (typeof ExamScalarFieldEnum)[keyof typeof ExamScalarFieldEnum]
 
 
+export const ExamAttemptScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  examId: 'examId',
+  status: 'status',
+  score: 'score',
+  gradedAt: 'gradedAt',
+  retakeNumber: 'retakeNumber',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  ipAddress: 'ipAddress'
+} as const
+
+export type ExamAttemptScalarFieldEnum = (typeof ExamAttemptScalarFieldEnum)[keyof typeof ExamAttemptScalarFieldEnum]
+
+
 export const QuestionScalarFieldEnum = {
   id: 'id',
+  examId: 'examId',
   title: 'title',
   description: 'description',
-  sampleInput: 'sampleInput',
-  sampleOutput: 'sampleOutput',
-  testCases: 'testCases',
-  examId: 'examId'
+  marks: 'marks',
+  timeLimitMs: 'timeLimitMs',
+  memoryLimitKb: 'memoryLimitKb',
+  orderIndex: 'orderIndex',
+  deletedAt: 'deletedAt'
 } as const
 
 export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
 
 
+export const TestCaseScalarFieldEnum = {
+  id: 'id',
+  questionId: 'questionId',
+  input: 'input',
+  expectedOutput: 'expectedOutput',
+  isHidden: 'isHidden',
+  weight: 'weight'
+} as const
+
+export type TestCaseScalarFieldEnum = (typeof TestCaseScalarFieldEnum)[keyof typeof TestCaseScalarFieldEnum]
+
+
 export const SubmissionScalarFieldEnum = {
   id: 'id',
-  code: 'code',
-  language: 'language',
-  status: 'status',
-  stdOut: 'stdOut',
-  stdErr: 'stdErr',
-  passedCount: 'passedCount',
+  attemptId: 'attemptId',
   userId: 'userId',
   examId: 'examId',
   questionId: 'questionId',
+  code: 'code',
+  language: 'language',
+  status: 'status',
+  executionTimeMs: 'executionTimeMs',
+  memoryUsedKb: 'memoryUsedKb',
+  passedCount: 'passedCount',
+  totalCount: 'totalCount',
+  stdErr: 'stdErr',
   submittedAt: 'submittedAt'
 } as const
 
 export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
+
+
+export const SubmissionTestCaseResultScalarFieldEnum = {
+  id: 'id',
+  submissionId: 'submissionId',
+  testCaseId: 'testCaseId',
+  passed: 'passed',
+  actualOutput: 'actualOutput',
+  executionTimeMs: 'executionTimeMs',
+  memoryUsedKb: 'memoryUsedKb'
+} as const
+
+export type SubmissionTestCaseResultScalarFieldEnum = (typeof SubmissionTestCaseResultScalarFieldEnum)[keyof typeof SubmissionTestCaseResultScalarFieldEnum]
 
 
 export const ProctoringLogScalarFieldEnum = {
@@ -139,8 +189,7 @@ export const ProctoringLogScalarFieldEnum = {
   violationType: 'violationType',
   details: 'details',
   snapshotUrl: 'snapshotUrl',
-  userId: 'userId',
-  examId: 'examId',
+  attemptId: 'attemptId',
   timestamp: 'timestamp'
 } as const
 
@@ -153,13 +202,6 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -176,13 +218,4 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const JsonNullValueFilter = {
-  DbNull: DbNull,
-  JsonNull: JsonNull,
-  AnyNull: AnyNull
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

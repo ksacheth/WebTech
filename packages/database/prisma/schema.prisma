@@ -13,12 +13,21 @@ enum UserRole {
   ADMIN
 }
 
+enum ExamAttemptStatus {
+  ENROLLED
+  IN_PROGRESS
+  COMPLETED
+  DISQUALIFIED
+}
+
 enum SubmissionStatus {
   PENDING
   ACCEPTED
   WRONG_ANSWER
   COMPILE_ERROR
   RUNTIME_ERROR
+  TIME_LIMIT_EXCEEDED
+  MEMORY_LIMIT_EXCEEDED
 }
 
 enum ViolationType {
@@ -27,66 +36,132 @@ enum ViolationType {
   COPY_PASTE
   MULTIPLE_FACES
   NO_FACE
+  OTHER
+}
+
+enum ProgrammingLanguage {
+  C
+  CPP
+  JAVA
+  PYTHON3
+  JAVASCRIPT
+  TYPESCRIPT
+  GO
+  RUST
 }
 
 model User {
-  id             String          @id @default(uuid())
-  email          String          @unique
-  name           String
-  password       String
-  role           UserRole        @default(STUDENT)
-  submissions    Submission[]
-  proctoringLogs ProctoringLog[]
-  examsCreated   Exam[]          @relation("FacultyExams")
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id           String        @id @default(uuid())
+  email        String        @unique
+  name         String
+  password     String
+  role         UserRole      @default(STUDENT)
+  examsCreated Exam[]        @relation("FacultyExams")
+  attempts     ExamAttempt[]
+  submissions  Submission[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Exam {
-  id          String          @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
   description String?
   startTime   DateTime
   endTime     DateTime
   durationMin Int
-  isActive    Boolean         @default(false)
+  isActive    Boolean       @default(false)
   accessCode  String?
   creatorId   String
-  creator     User            @relation("FacultyExams", fields: [creatorId], references: [id])
+  creator     User          @relation("FacultyExams", fields: [creatorId], references: [id])
+  attempts    ExamAttempt[]
   questions   Question[]
   submissions Submission[]
-  logs        ProctoringLog[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+}
+
+model ExamAttempt {
+  id           String            @id @default(uuid())
+  userId       String
+  user         User              @relation(fields: [userId], references: [id])
+  examId       String
+  exam         Exam              @relation(fields: [examId], references: [id])
+  status       ExamAttemptStatus @default(ENROLLED)
+  score        Float?
+  gradedAt     DateTime?
+  retakeNumber Int               @default(1)
+  startedAt    DateTime?
+  completedAt  DateTime?
+  ipAddress    String?
+  submissions  Submission[]
+  logs         ProctoringLog[]
+
+  @@unique([userId, examId, retakeNumber])
 }
 
 model Question {
-  id           String       @id @default(uuid())
-  title        String
-  description  String
-  sampleInput  String?
-  sampleOutput String?
-  testCases    Json
-  examId       String
-  exam         Exam         @relation(fields: [examId], references: [id])
-  submissions  Submission[]
+  id            String       @id @default(uuid())
+  examId        String
+  exam          Exam         @relation(fields: [examId], references: [id])
+  title         String
+  description   String
+  marks         Float        @default(10.0)
+  timeLimitMs   Int          @default(2000)
+  memoryLimitKb Int          @default(256000)
+  orderIndex    Int
+  deletedAt     DateTime?
+  testCases     TestCase[]
+  submissions   Submission[]
+}
+
+model TestCase {
+  id             String                     @id @default(uuid())
+  questionId     String
+  question       Question                   @relation(fields: [questionId], references: [id])
+  input          String
+  expectedOutput String
+  isHidden       Boolean                    @default(true)
+  weight         Float                      @default(1.0)
+  results        SubmissionTestCaseResult[]
 }
 
 model Submission {
-  id          String           @id @default(uuid())
-  code        String
-  language    String
-  status      SubmissionStatus @default(PENDING)
-  stdOut      String?
-  stdErr      String?
-  passedCount Int              @default(0)
-  userId      String
-  user        User             @relation(fields: [userId], references: [id])
-  examId      String
-  exam        Exam             @relation(fields: [examId], references: [id])
-  questionId  String
-  question    Question         @relation(fields: [questionId], references: [id])
-  submittedAt DateTime         @default(now())
+  id              String                     @id @default(uuid())
+  attemptId       String
+  attempt         ExamAttempt                @relation(fields: [attemptId], references: [id])
+  userId          String
+  user            User                       @relation(fields: [userId], references: [id])
+  examId          String
+  exam            Exam                       @relation(fields: [examId], references: [id])
+  questionId      String
+  question        Question                   @relation(fields: [questionId], references: [id])
+  code            String
+  language        ProgrammingLanguage
+  status          SubmissionStatus           @default(PENDING)
+  executionTimeMs Int?
+  memoryUsedKb    Int?
+  passedCount     Int                        @default(0)
+  totalCount      Int                        @default(0)
+  stdErr          String?
+  submittedAt     DateTime                   @default(now())
+  testCaseResults SubmissionTestCaseResult[]
+
+  @@index([attemptId, questionId])
+  @@index([userId, questionId])
+}
+
+model SubmissionTestCaseResult {
+  id              String     @id @default(uuid())
+  submissionId    String
+  submission      Submission @relation(fields: [submissionId], references: [id])
+  testCaseId      String
+  testCase        TestCase   @relation(fields: [testCaseId], references: [id])
+  passed          Boolean
+  actualOutput    String?
+  executionTimeMs Int?
+  memoryUsedKb    Int?
 }
 
 model ProctoringLog {
@@ -94,9 +169,9 @@ model ProctoringLog {
   violationType ViolationType
   details       String?
   snapshotUrl   String?
-  userId        String
-  user          User          @relation(fields: [userId], references: [id])
-  examId        String
-  exam          Exam          @relation(fields: [examId], references: [id])
+  attemptId     String
+  attempt       ExamAttempt   @relation(fields: [attemptId], references: [id])
   timestamp     DateTime      @default(now())
+
+  @@index([attemptId])
 }
