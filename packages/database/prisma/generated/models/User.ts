@@ -14,7 +14,8 @@ import type * as Prisma from "../internal/prismaNamespace.ts"
 
 /**
  * Model User
- * 
+ * NULL departmentId / batchId is valid for FACULTY and ADMIN roles.
+ * Enforce their presence for STUDENT at the application layer.
  */
 export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayload>
 
@@ -30,6 +31,9 @@ export type UserMinAggregateOutputType = {
   name: string | null
   password: string | null
   role: $Enums.UserRole | null
+  departmentId: string | null
+  batchId: string | null
+  rollNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +44,9 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   password: string | null
   role: $Enums.UserRole | null
+  departmentId: string | null
+  batchId: string | null
+  rollNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +57,9 @@ export type UserCountAggregateOutputType = {
   name: number
   password: number
   role: number
+  departmentId: number
+  batchId: number
+  rollNumber: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +72,9 @@ export type UserMinAggregateInputType = {
   name?: true
   password?: true
   role?: true
+  departmentId?: true
+  batchId?: true
+  rollNumber?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +85,9 @@ export type UserMaxAggregateInputType = {
   name?: true
   password?: true
   role?: true
+  departmentId?: true
+  batchId?: true
+  rollNumber?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +98,9 @@ export type UserCountAggregateInputType = {
   name?: true
   password?: true
   role?: true
+  departmentId?: true
+  batchId?: true
+  rollNumber?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -165,6 +184,9 @@ export type UserGroupByOutputType = {
   name: string
   password: string
   role: $Enums.UserRole
+  departmentId: string | null
+  batchId: string | null
+  rollNumber: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -196,8 +218,13 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  departmentId?: Prisma.StringNullableFilter<"User"> | string | null
+  batchId?: Prisma.StringNullableFilter<"User"> | string | null
+  rollNumber?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
+  batch?: Prisma.XOR<Prisma.BatchNullableScalarRelationFilter, Prisma.BatchWhereInput> | null
   examsCreated?: Prisma.ExamListRelationFilter
   attempts?: Prisma.ExamAttemptListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
@@ -209,8 +236,13 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  department?: Prisma.DepartmentOrderByWithRelationInput
+  batch?: Prisma.BatchOrderByWithRelationInput
   examsCreated?: Prisma.ExamOrderByRelationAggregateInput
   attempts?: Prisma.ExamAttemptOrderByRelationAggregateInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
@@ -219,18 +251,23 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  rollNumber?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  departmentId?: Prisma.StringNullableFilter<"User"> | string | null
+  batchId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
+  batch?: Prisma.XOR<Prisma.BatchNullableScalarRelationFilter, Prisma.BatchWhereInput> | null
   examsCreated?: Prisma.ExamListRelationFilter
   attempts?: Prisma.ExamAttemptListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "rollNumber">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -238,6 +275,9 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  batchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  rollNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -254,6 +294,9 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+  departmentId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  batchId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  rollNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -264,8 +307,11 @@ export type UserCreateInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  department?: Prisma.DepartmentCreateNestedOneWithoutUsersInput
+  batch?: Prisma.BatchCreateNestedOneWithoutUsersInput
   examsCreated?: Prisma.ExamCreateNestedManyWithoutCreatorInput
   attempts?: Prisma.ExamAttemptCreateNestedManyWithoutUserInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
@@ -277,6 +323,9 @@ export type UserUncheckedCreateInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  departmentId?: string | null
+  batchId?: string | null
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   examsCreated?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatorInput
@@ -290,8 +339,11 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department?: Prisma.DepartmentUpdateOneWithoutUsersNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutUsersNestedInput
   examsCreated?: Prisma.ExamUpdateManyWithoutCreatorNestedInput
   attempts?: Prisma.ExamAttemptUpdateManyWithoutUserNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
@@ -303,6 +355,9 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   examsCreated?: Prisma.ExamUncheckedUpdateManyWithoutCreatorNestedInput
@@ -316,6 +371,9 @@ export type UserCreateManyInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  departmentId?: string | null
+  batchId?: string | null
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -326,6 +384,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -336,8 +395,21 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -346,6 +418,9 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
+  rollNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -356,6 +431,9 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
+  rollNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -366,6 +444,9 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  batchId?: Prisma.SortOrder
+  rollNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -375,16 +456,92 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type UserCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDepartmentInput, Prisma.UserUncheckedCreateWithoutDepartmentInput> | Prisma.UserCreateWithoutDepartmentInput[] | Prisma.UserUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDepartmentInput | Prisma.UserCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.UserCreateManyDepartmentInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDepartmentInput, Prisma.UserUncheckedCreateWithoutDepartmentInput> | Prisma.UserCreateWithoutDepartmentInput[] | Prisma.UserUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDepartmentInput | Prisma.UserCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.UserCreateManyDepartmentInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDepartmentInput, Prisma.UserUncheckedCreateWithoutDepartmentInput> | Prisma.UserCreateWithoutDepartmentInput[] | Prisma.UserUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDepartmentInput | Prisma.UserCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.UserUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.UserCreateManyDepartmentInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.UserUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutDepartmentInput | Prisma.UserUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDepartmentInput, Prisma.UserUncheckedCreateWithoutDepartmentInput> | Prisma.UserCreateWithoutDepartmentInput[] | Prisma.UserUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDepartmentInput | Prisma.UserCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.UserUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.UserCreateManyDepartmentInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.UserUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutDepartmentInput | Prisma.UserUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedManyWithoutBatchInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBatchInput, Prisma.UserUncheckedCreateWithoutBatchInput> | Prisma.UserCreateWithoutBatchInput[] | Prisma.UserUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBatchInput | Prisma.UserCreateOrConnectWithoutBatchInput[]
+  createMany?: Prisma.UserCreateManyBatchInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutBatchInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBatchInput, Prisma.UserUncheckedCreateWithoutBatchInput> | Prisma.UserCreateWithoutBatchInput[] | Prisma.UserUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBatchInput | Prisma.UserCreateOrConnectWithoutBatchInput[]
+  createMany?: Prisma.UserCreateManyBatchInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutBatchNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBatchInput, Prisma.UserUncheckedCreateWithoutBatchInput> | Prisma.UserCreateWithoutBatchInput[] | Prisma.UserUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBatchInput | Prisma.UserCreateOrConnectWithoutBatchInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutBatchInput | Prisma.UserUpsertWithWhereUniqueWithoutBatchInput[]
+  createMany?: Prisma.UserCreateManyBatchInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutBatchInput | Prisma.UserUpdateWithWhereUniqueWithoutBatchInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutBatchInput | Prisma.UserUpdateManyWithWhereWithoutBatchInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutBatchNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBatchInput, Prisma.UserUncheckedCreateWithoutBatchInput> | Prisma.UserCreateWithoutBatchInput[] | Prisma.UserUncheckedCreateWithoutBatchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBatchInput | Prisma.UserCreateOrConnectWithoutBatchInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutBatchInput | Prisma.UserUpsertWithWhereUniqueWithoutBatchInput[]
+  createMany?: Prisma.UserCreateManyBatchInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutBatchInput | Prisma.UserUpdateWithWhereUniqueWithoutBatchInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutBatchInput | Prisma.UserUpdateManyWithWhereWithoutBatchInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type UserCreateNestedOneWithoutExamsCreatedInput = {
@@ -429,14 +586,145 @@ export type UserUpdateOneRequiredWithoutSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.UserUpdateWithoutSubmissionsInput>, Prisma.UserUncheckedUpdateWithoutSubmissionsInput>
 }
 
+export type UserCreateWithoutDepartmentInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.UserRole
+  rollNumber?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  batch?: Prisma.BatchCreateNestedOneWithoutUsersInput
+  examsCreated?: Prisma.ExamCreateNestedManyWithoutCreatorInput
+  attempts?: Prisma.ExamAttemptCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutDepartmentInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.UserRole
+  batchId?: string | null
+  rollNumber?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  examsCreated?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatorInput
+  attempts?: Prisma.ExamAttemptUncheckedCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutDepartmentInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDepartmentInput, Prisma.UserUncheckedCreateWithoutDepartmentInput>
+}
+
+export type UserCreateManyDepartmentInputEnvelope = {
+  data: Prisma.UserCreateManyDepartmentInput | Prisma.UserCreateManyDepartmentInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDepartmentInput, Prisma.UserUncheckedUpdateWithoutDepartmentInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDepartmentInput, Prisma.UserUncheckedCreateWithoutDepartmentInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDepartmentInput, Prisma.UserUncheckedUpdateWithoutDepartmentInput>
+}
+
+export type UserUpdateManyWithWhereWithoutDepartmentInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutDepartmentInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  departmentId?: Prisma.StringNullableFilter<"User"> | string | null
+  batchId?: Prisma.StringNullableFilter<"User"> | string | null
+  rollNumber?: Prisma.StringNullableFilter<"User"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+}
+
+export type UserCreateWithoutBatchInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.UserRole
+  rollNumber?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  department?: Prisma.DepartmentCreateNestedOneWithoutUsersInput
+  examsCreated?: Prisma.ExamCreateNestedManyWithoutCreatorInput
+  attempts?: Prisma.ExamAttemptCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutBatchInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.UserRole
+  departmentId?: string | null
+  rollNumber?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  examsCreated?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatorInput
+  attempts?: Prisma.ExamAttemptUncheckedCreateNestedManyWithoutUserInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutBatchInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBatchInput, Prisma.UserUncheckedCreateWithoutBatchInput>
+}
+
+export type UserCreateManyBatchInputEnvelope = {
+  data: Prisma.UserCreateManyBatchInput | Prisma.UserCreateManyBatchInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutBatchInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBatchInput, Prisma.UserUncheckedUpdateWithoutBatchInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBatchInput, Prisma.UserUncheckedCreateWithoutBatchInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutBatchInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBatchInput, Prisma.UserUncheckedUpdateWithoutBatchInput>
+}
+
+export type UserUpdateManyWithWhereWithoutBatchInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutBatchInput>
+}
+
 export type UserCreateWithoutExamsCreatedInput = {
   id?: string
   email: string
   name: string
   password: string
   role?: $Enums.UserRole
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  department?: Prisma.DepartmentCreateNestedOneWithoutUsersInput
+  batch?: Prisma.BatchCreateNestedOneWithoutUsersInput
   attempts?: Prisma.ExamAttemptCreateNestedManyWithoutUserInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
 }
@@ -447,6 +735,9 @@ export type UserUncheckedCreateWithoutExamsCreatedInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  departmentId?: string | null
+  batchId?: string | null
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   attempts?: Prisma.ExamAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -475,8 +766,11 @@ export type UserUpdateWithoutExamsCreatedInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department?: Prisma.DepartmentUpdateOneWithoutUsersNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutUsersNestedInput
   attempts?: Prisma.ExamAttemptUpdateManyWithoutUserNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
 }
@@ -487,6 +781,9 @@ export type UserUncheckedUpdateWithoutExamsCreatedInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attempts?: Prisma.ExamAttemptUncheckedUpdateManyWithoutUserNestedInput
@@ -499,8 +796,11 @@ export type UserCreateWithoutAttemptsInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  department?: Prisma.DepartmentCreateNestedOneWithoutUsersInput
+  batch?: Prisma.BatchCreateNestedOneWithoutUsersInput
   examsCreated?: Prisma.ExamCreateNestedManyWithoutCreatorInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutUserInput
 }
@@ -511,6 +811,9 @@ export type UserUncheckedCreateWithoutAttemptsInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  departmentId?: string | null
+  batchId?: string | null
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   examsCreated?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatorInput
@@ -539,8 +842,11 @@ export type UserUpdateWithoutAttemptsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department?: Prisma.DepartmentUpdateOneWithoutUsersNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutUsersNestedInput
   examsCreated?: Prisma.ExamUpdateManyWithoutCreatorNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
 }
@@ -551,6 +857,9 @@ export type UserUncheckedUpdateWithoutAttemptsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   examsCreated?: Prisma.ExamUncheckedUpdateManyWithoutCreatorNestedInput
@@ -563,8 +872,11 @@ export type UserCreateWithoutSubmissionsInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  department?: Prisma.DepartmentCreateNestedOneWithoutUsersInput
+  batch?: Prisma.BatchCreateNestedOneWithoutUsersInput
   examsCreated?: Prisma.ExamCreateNestedManyWithoutCreatorInput
   attempts?: Prisma.ExamAttemptCreateNestedManyWithoutUserInput
 }
@@ -575,6 +887,9 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  departmentId?: string | null
+  batchId?: string | null
+  rollNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   examsCreated?: Prisma.ExamUncheckedCreateNestedManyWithoutCreatorInput
@@ -603,8 +918,11 @@ export type UserUpdateWithoutSubmissionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department?: Prisma.DepartmentUpdateOneWithoutUsersNestedInput
+  batch?: Prisma.BatchUpdateOneWithoutUsersNestedInput
   examsCreated?: Prisma.ExamUpdateManyWithoutCreatorNestedInput
   attempts?: Prisma.ExamAttemptUpdateManyWithoutUserNestedInput
 }
@@ -615,10 +933,121 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   examsCreated?: Prisma.ExamUncheckedUpdateManyWithoutCreatorNestedInput
   attempts?: Prisma.ExamAttemptUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateManyDepartmentInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.UserRole
+  batchId?: string | null
+  rollNumber?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  batch?: Prisma.BatchUpdateOneWithoutUsersNestedInput
+  examsCreated?: Prisma.ExamUpdateManyWithoutCreatorNestedInput
+  attempts?: Prisma.ExamAttemptUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  examsCreated?: Prisma.ExamUncheckedUpdateManyWithoutCreatorNestedInput
+  attempts?: Prisma.ExamAttemptUncheckedUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  batchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserCreateManyBatchInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role?: $Enums.UserRole
+  departmentId?: string | null
+  rollNumber?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutBatchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  department?: Prisma.DepartmentUpdateOneWithoutUsersNestedInput
+  examsCreated?: Prisma.ExamUpdateManyWithoutCreatorNestedInput
+  attempts?: Prisma.ExamAttemptUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBatchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  examsCreated?: Prisma.ExamUncheckedUpdateManyWithoutCreatorNestedInput
+  attempts?: Prisma.ExamAttemptUncheckedUpdateManyWithoutUserNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutBatchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rollNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -676,8 +1105,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   password?: boolean
   role?: boolean
+  departmentId?: boolean
+  batchId?: boolean
+  rollNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  department?: boolean | Prisma.User$departmentArgs<ExtArgs>
+  batch?: boolean | Prisma.User$batchArgs<ExtArgs>
   examsCreated?: boolean | Prisma.User$examsCreatedArgs<ExtArgs>
   attempts?: boolean | Prisma.User$attemptsArgs<ExtArgs>
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
@@ -690,8 +1124,13 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   password?: boolean
   role?: boolean
+  departmentId?: boolean
+  batchId?: boolean
+  rollNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  department?: boolean | Prisma.User$departmentArgs<ExtArgs>
+  batch?: boolean | Prisma.User$batchArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -700,8 +1139,13 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   password?: boolean
   role?: boolean
+  departmentId?: boolean
+  batchId?: boolean
+  rollNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  department?: boolean | Prisma.User$departmentArgs<ExtArgs>
+  batch?: boolean | Prisma.User$batchArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -710,23 +1154,36 @@ export type UserSelectScalar = {
   name?: boolean
   password?: boolean
   role?: boolean
+  departmentId?: boolean
+  batchId?: boolean
+  rollNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "departmentId" | "batchId" | "rollNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  department?: boolean | Prisma.User$departmentArgs<ExtArgs>
+  batch?: boolean | Prisma.User$batchArgs<ExtArgs>
   examsCreated?: boolean | Prisma.User$examsCreatedArgs<ExtArgs>
   attempts?: boolean | Prisma.User$attemptsArgs<ExtArgs>
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  department?: boolean | Prisma.User$departmentArgs<ExtArgs>
+  batch?: boolean | Prisma.User$batchArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  department?: boolean | Prisma.User$departmentArgs<ExtArgs>
+  batch?: boolean | Prisma.User$batchArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    department: Prisma.$DepartmentPayload<ExtArgs> | null
+    batch: Prisma.$BatchPayload<ExtArgs> | null
     examsCreated: Prisma.$ExamPayload<ExtArgs>[]
     attempts: Prisma.$ExamAttemptPayload<ExtArgs>[]
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
@@ -737,6 +1194,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     password: string
     role: $Enums.UserRole
+    departmentId: string | null
+    batchId: string | null
+    rollNumber: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1133,6 +1593,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  department<T extends Prisma.User$departmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$departmentArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  batch<T extends Prisma.User$batchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$batchArgs<ExtArgs>>): Prisma.Prisma__BatchClient<runtime.Types.Result.GetResult<Prisma.$BatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   examsCreated<T extends Prisma.User$examsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$examsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attempts<T extends Prisma.User$attemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   submissions<T extends Prisma.User$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1170,6 +1632,9 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
+  readonly departmentId: Prisma.FieldRef<"User", 'String'>
+  readonly batchId: Prisma.FieldRef<"User", 'String'>
+  readonly rollNumber: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1421,6 +1886,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1491,6 +1960,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1557,6 +2030,44 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.department
+ */
+export type User$departmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Department
+   */
+  select?: Prisma.DepartmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Department
+   */
+  omit?: Prisma.DepartmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DepartmentInclude<ExtArgs> | null
+  where?: Prisma.DepartmentWhereInput
+}
+
+/**
+ * User.batch
+ */
+export type User$batchArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Batch
+   */
+  select?: Prisma.BatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Batch
+   */
+  omit?: Prisma.BatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BatchInclude<ExtArgs> | null
+  where?: Prisma.BatchWhereInput
 }
 
 /**

@@ -7,6 +7,10 @@ datasource db {
   provider = "postgresql"
 }
 
+// -----------------------------------------------------------------------
+// ENUMS
+// -----------------------------------------------------------------------
+
 enum UserRole {
   STUDENT
   FACULTY
@@ -50,36 +54,101 @@ enum ProgrammingLanguage {
   RUST
 }
 
+// -----------------------------------------------------------------------
+// MODELS — NEW
+// -----------------------------------------------------------------------
+
+model Department {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  code      String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  batches       Batch[]
+  users         User[]
+  eligibilities ExamEligibility[]
+}
+
+model Batch {
+  id           String     @id @default(uuid())
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  yearOfStudy  Int
+  intakeYear   Int
+  label        String
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  users         User[]
+  eligibilities ExamEligibility[]
+
+  @@unique([departmentId, yearOfStudy, intakeYear])
+}
+
+/// Rows are OR-ed: a student satisfying AT LEAST ONE row is eligible.
+/// Enforce (batchId IS NOT NULL OR departmentId IS NOT NULL) at the app layer.
+model ExamEligibility {
+  id           String      @id @default(uuid())
+  examId       String
+  exam         Exam        @relation(fields: [examId], references: [id])
+  batchId      String?
+  batch        Batch?      @relation(fields: [batchId], references: [id])
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  /// Optional admin annotation, e.g. "re-sit students only"
+  note         String?
+  createdAt    DateTime    @default(now())
+
+  @@unique([examId, batchId, departmentId])
+}
+
+// -----------------------------------------------------------------------
+// MODELS — MODIFIED
+// -----------------------------------------------------------------------
+
+/// NULL departmentId / batchId is valid for FACULTY and ADMIN roles.
+/// Enforce their presence for STUDENT at the application layer.
 model User {
-  id           String        @id @default(uuid())
-  email        String        @unique
+  id           String      @id @default(uuid())
+  email        String      @unique
   name         String
   password     String
-  role         UserRole      @default(STUDENT)
+  role         UserRole    @default(STUDENT)
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  batchId      String?
+  batch        Batch?      @relation(fields: [batchId], references: [id])
+  rollNumber   String?     @unique
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
   examsCreated Exam[]        @relation("FacultyExams")
   attempts     ExamAttempt[]
   submissions  Submission[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
 }
 
 model Exam {
-  id          String        @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String?
   startTime   DateTime
   endTime     DateTime
   durationMin Int
-  isActive    Boolean       @default(false)
+  isActive    Boolean   @default(false)
   accessCode  String?
   creatorId   String
-  creator     User          @relation("FacultyExams", fields: [creatorId], references: [id])
-  attempts    ExamAttempt[]
-  questions   Question[]
-  submissions Submission[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  creator     User      @relation("FacultyExams", fields: [creatorId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   deletedAt   DateTime?
+
+  attempts      ExamAttempt[]
+  questions     Question[]
+  submissions   Submission[]
+  eligibilities ExamEligibility[]
 }
 
 model ExamAttempt {
@@ -95,57 +164,61 @@ model ExamAttempt {
   startedAt    DateTime?
   completedAt  DateTime?
   ipAddress    String?
-  submissions  Submission[]
-  logs         ProctoringLog[]
+
+  submissions Submission[]
+  logs        ProctoringLog[]
 
   @@unique([userId, examId, retakeNumber])
 }
 
 model Question {
-  id            String       @id @default(uuid())
+  id            String    @id @default(uuid())
   examId        String
-  exam          Exam         @relation(fields: [examId], references: [id])
+  exam          Exam      @relation(fields: [examId], references: [id])
   title         String
   description   String
-  marks         Float        @default(10.0)
-  timeLimitMs   Int          @default(2000)
-  memoryLimitKb Int          @default(256000)
+  marks         Float     @default(10.0)
+  timeLimitMs   Int       @default(2000)
+  memoryLimitKb Int       @default(256000)
   orderIndex    Int
   deletedAt     DateTime?
-  testCases     TestCase[]
-  submissions   Submission[]
+
+  testCases   TestCase[]
+  submissions Submission[]
 }
 
 model TestCase {
-  id             String                     @id @default(uuid())
+  id             String   @id @default(uuid())
   questionId     String
-  question       Question                   @relation(fields: [questionId], references: [id])
+  question       Question @relation(fields: [questionId], references: [id])
   input          String
   expectedOutput String
-  isHidden       Boolean                    @default(true)
-  weight         Float                      @default(1.0)
-  results        SubmissionTestCaseResult[]
+  isHidden       Boolean  @default(true)
+  weight         Float    @default(1.0)
+
+  results SubmissionTestCaseResult[]
 }
 
 model Submission {
-  id              String                     @id @default(uuid())
+  id              String              @id @default(uuid())
   attemptId       String
-  attempt         ExamAttempt                @relation(fields: [attemptId], references: [id])
+  attempt         ExamAttempt         @relation(fields: [attemptId], references: [id])
   userId          String
-  user            User                       @relation(fields: [userId], references: [id])
+  user            User                @relation(fields: [userId], references: [id])
   examId          String
-  exam            Exam                       @relation(fields: [examId], references: [id])
+  exam            Exam                @relation(fields: [examId], references: [id])
   questionId      String
-  question        Question                   @relation(fields: [questionId], references: [id])
+  question        Question            @relation(fields: [questionId], references: [id])
   code            String
   language        ProgrammingLanguage
-  status          SubmissionStatus           @default(PENDING)
+  status          SubmissionStatus    @default(PENDING)
   executionTimeMs Int?
   memoryUsedKb    Int?
-  passedCount     Int                        @default(0)
-  totalCount      Int                        @default(0)
+  passedCount     Int                 @default(0)
+  totalCount      Int                 @default(0)
   stdErr          String?
-  submittedAt     DateTime                   @default(now())
+  submittedAt     DateTime            @default(now())
+
   testCaseResults SubmissionTestCaseResult[]
 
   @@index([attemptId, questionId])
@@ -166,11 +239,11 @@ model SubmissionTestCaseResult {
 
 model ProctoringLog {
   id            String        @id @default(uuid())
+  attemptId     String
+  attempt       ExamAttempt   @relation(fields: [attemptId], references: [id])
   violationType ViolationType
   details       String?
   snapshotUrl   String?
-  attemptId     String
-  attempt       ExamAttempt   @relation(fields: [attemptId], references: [id])
   timestamp     DateTime      @default(now())
 
   @@index([attemptId])

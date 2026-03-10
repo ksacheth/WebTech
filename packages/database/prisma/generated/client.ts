@@ -28,9 +28,11 @@ export * from "./enums.ts"
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
+ * // Fetch zero or more Departments
+ * const departments = await prisma.department.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -40,8 +42,25 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model User
+ * Model Department
  * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
+ * Model Batch
+ * 
+ */
+export type Batch = Prisma.BatchModel
+/**
+ * Model ExamEligibility
+ * Rows are OR-ed: a student satisfying AT LEAST ONE row is eligible.
+ * Enforce (batchId IS NOT NULL OR departmentId IS NOT NULL) at the app layer.
+ */
+export type ExamEligibility = Prisma.ExamEligibilityModel
+/**
+ * Model User
+ * NULL departmentId / batchId is valid for FACULTY and ADMIN roles.
+ * Enforce their presence for STUDENT at the application layer.
  */
 export type User = Prisma.UserModel
 /**

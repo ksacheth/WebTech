@@ -11,9 +11,13 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@common/types": "workspace:*",
     "@repo/database": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

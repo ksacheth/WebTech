@@ -18,8 +18,25 @@ export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
 /**
- * Model User
+ * Model Department
  * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
+ * Model Batch
+ * 
+ */
+export type Batch = Prisma.BatchModel
+/**
+ * Model ExamEligibility
+ * Rows are OR-ed: a student satisfying AT LEAST ONE row is eligible.
+ * Enforce (batchId IS NOT NULL OR departmentId IS NOT NULL) at the app layer.
+ */
+export type ExamEligibility = Prisma.ExamEligibilityModel
+/**
+ * Model User
+ * NULL departmentId / batchId is valid for FACULTY and ADMIN roles.
+ * Enforce their presence for STUDENT at the application layer.
  */
 export type User = Prisma.UserModel
 /**

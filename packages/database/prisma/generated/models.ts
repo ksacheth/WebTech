@@ -8,6 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Department.ts'
+export type * from './models/Batch.ts'
+export type * from './models/ExamEligibility.ts'
 export type * from './models/User.ts'
 export type * from './models/Exam.ts'
 export type * from './models/ExamAttempt.ts'

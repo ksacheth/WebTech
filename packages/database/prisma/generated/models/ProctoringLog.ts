@@ -26,28 +26,28 @@ export type AggregateProctoringLog = {
 
 export type ProctoringLogMinAggregateOutputType = {
   id: string | null
+  attemptId: string | null
   violationType: $Enums.ViolationType | null
   details: string | null
   snapshotUrl: string | null
-  attemptId: string | null
   timestamp: Date | null
 }
 
 export type ProctoringLogMaxAggregateOutputType = {
   id: string | null
+  attemptId: string | null
   violationType: $Enums.ViolationType | null
   details: string | null
   snapshotUrl: string | null
-  attemptId: string | null
   timestamp: Date | null
 }
 
 export type ProctoringLogCountAggregateOutputType = {
   id: number
+  attemptId: number
   violationType: number
   details: number
   snapshotUrl: number
-  attemptId: number
   timestamp: number
   _all: number
 }
@@ -55,28 +55,28 @@ export type ProctoringLogCountAggregateOutputType = {
 
 export type ProctoringLogMinAggregateInputType = {
   id?: true
+  attemptId?: true
   violationType?: true
   details?: true
   snapshotUrl?: true
-  attemptId?: true
   timestamp?: true
 }
 
 export type ProctoringLogMaxAggregateInputType = {
   id?: true
+  attemptId?: true
   violationType?: true
   details?: true
   snapshotUrl?: true
-  attemptId?: true
   timestamp?: true
 }
 
 export type ProctoringLogCountAggregateInputType = {
   id?: true
+  attemptId?: true
   violationType?: true
   details?: true
   snapshotUrl?: true
-  attemptId?: true
   timestamp?: true
   _all?: true
 }
@@ -155,10 +155,10 @@ export type ProctoringLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type ProctoringLogGroupByOutputType = {
   id: string
+  attemptId: string
   violationType: $Enums.ViolationType
   details: string | null
   snapshotUrl: string | null
-  attemptId: string
   timestamp: Date
   _count: ProctoringLogCountAggregateOutputType | null
   _min: ProctoringLogMinAggregateOutputType | null
@@ -185,20 +185,20 @@ export type ProctoringLogWhereInput = {
   OR?: Prisma.ProctoringLogWhereInput[]
   NOT?: Prisma.ProctoringLogWhereInput | Prisma.ProctoringLogWhereInput[]
   id?: Prisma.StringFilter<"ProctoringLog"> | string
+  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   violationType?: Prisma.EnumViolationTypeFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
-  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeFilter<"ProctoringLog"> | Date | string
   attempt?: Prisma.XOR<Prisma.ExamAttemptScalarRelationFilter, Prisma.ExamAttemptWhereInput>
 }
 
 export type ProctoringLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrderInput | Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   attempt?: Prisma.ExamAttemptOrderByWithRelationInput
 }
@@ -208,20 +208,20 @@ export type ProctoringLogWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ProctoringLogWhereInput | Prisma.ProctoringLogWhereInput[]
   OR?: Prisma.ProctoringLogWhereInput[]
   NOT?: Prisma.ProctoringLogWhereInput | Prisma.ProctoringLogWhereInput[]
+  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   violationType?: Prisma.EnumViolationTypeFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
-  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeFilter<"ProctoringLog"> | Date | string
   attempt?: Prisma.XOR<Prisma.ExamAttemptScalarRelationFilter, Prisma.ExamAttemptWhereInput>
 }, "id">
 
 export type ProctoringLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrderInput | Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   _count?: Prisma.ProctoringLogCountOrderByAggregateInput
   _max?: Prisma.ProctoringLogMaxOrderByAggregateInput
@@ -233,10 +233,10 @@ export type ProctoringLogScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProctoringLogScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProctoringLogScalarWhereWithAggregatesInput | Prisma.ProctoringLogScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ProctoringLog"> | string
+  attemptId?: Prisma.StringWithAggregatesFilter<"ProctoringLog"> | string
   violationType?: Prisma.EnumViolationTypeWithAggregatesFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableWithAggregatesFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableWithAggregatesFilter<"ProctoringLog"> | string | null
-  attemptId?: Prisma.StringWithAggregatesFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"ProctoringLog"> | Date | string
 }
 
@@ -251,10 +251,10 @@ export type ProctoringLogCreateInput = {
 
 export type ProctoringLogUncheckedCreateInput = {
   id?: string
+  attemptId: string
   violationType: $Enums.ViolationType
   details?: string | null
   snapshotUrl?: string | null
-  attemptId: string
   timestamp?: Date | string
 }
 
@@ -269,19 +269,19 @@ export type ProctoringLogUpdateInput = {
 
 export type ProctoringLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProctoringLogCreateManyInput = {
   id?: string
+  attemptId: string
   violationType: $Enums.ViolationType
   details?: string | null
   snapshotUrl?: string | null
-  attemptId: string
   timestamp?: Date | string
 }
 
@@ -295,10 +295,10 @@ export type ProctoringLogUpdateManyMutationInput = {
 
 export type ProctoringLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   violationType?: Prisma.EnumViolationTypeFieldUpdateOperationsInput | $Enums.ViolationType
   details?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshotUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attemptId?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -314,28 +314,28 @@ export type ProctoringLogOrderByRelationAggregateInput = {
 
 export type ProctoringLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrder
-  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
 export type ProctoringLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrder
-  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
 export type ProctoringLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  attemptId?: Prisma.SortOrder
   violationType?: Prisma.SortOrder
   details?: Prisma.SortOrder
   snapshotUrl?: Prisma.SortOrder
-  attemptId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -432,10 +432,10 @@ export type ProctoringLogScalarWhereInput = {
   OR?: Prisma.ProctoringLogScalarWhereInput[]
   NOT?: Prisma.ProctoringLogScalarWhereInput | Prisma.ProctoringLogScalarWhereInput[]
   id?: Prisma.StringFilter<"ProctoringLog"> | string
+  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   violationType?: Prisma.EnumViolationTypeFilter<"ProctoringLog"> | $Enums.ViolationType
   details?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
   snapshotUrl?: Prisma.StringNullableFilter<"ProctoringLog"> | string | null
-  attemptId?: Prisma.StringFilter<"ProctoringLog"> | string
   timestamp?: Prisma.DateTimeFilter<"ProctoringLog"> | Date | string
 }
 
@@ -475,44 +475,44 @@ export type ProctoringLogUncheckedUpdateManyWithoutAttemptInput = {
 
 export type ProctoringLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  attemptId?: boolean
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  attemptId?: boolean
   timestamp?: boolean
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proctoringLog"]>
 
 export type ProctoringLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  attemptId?: boolean
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  attemptId?: boolean
   timestamp?: boolean
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proctoringLog"]>
 
 export type ProctoringLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  attemptId?: boolean
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  attemptId?: boolean
   timestamp?: boolean
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proctoringLog"]>
 
 export type ProctoringLogSelectScalar = {
   id?: boolean
+  attemptId?: boolean
   violationType?: boolean
   details?: boolean
   snapshotUrl?: boolean
-  attemptId?: boolean
   timestamp?: boolean
 }
 
-export type ProctoringLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "violationType" | "details" | "snapshotUrl" | "attemptId" | "timestamp", ExtArgs["result"]["proctoringLog"]>
+export type ProctoringLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "violationType" | "details" | "snapshotUrl" | "timestamp", ExtArgs["result"]["proctoringLog"]>
 export type ProctoringLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
 }
@@ -530,10 +530,10 @@ export type $ProctoringLogPayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    attemptId: string
     violationType: $Enums.ViolationType
     details: string | null
     snapshotUrl: string | null
-    attemptId: string
     timestamp: Date
   }, ExtArgs["result"]["proctoringLog"]>
   composites: {}
@@ -960,10 +960,10 @@ export interface Prisma__ProctoringLogClient<T, Null = never, ExtArgs extends ru
  */
 export interface ProctoringLogFieldRefs {
   readonly id: Prisma.FieldRef<"ProctoringLog", 'String'>
+  readonly attemptId: Prisma.FieldRef<"ProctoringLog", 'String'>
   readonly violationType: Prisma.FieldRef<"ProctoringLog", 'ViolationType'>
   readonly details: Prisma.FieldRef<"ProctoringLog", 'String'>
   readonly snapshotUrl: Prisma.FieldRef<"ProctoringLog", 'String'>
-  readonly attemptId: Prisma.FieldRef<"ProctoringLog", 'String'>
   readonly timestamp: Prisma.FieldRef<"ProctoringLog", 'DateTime'>
 }
     

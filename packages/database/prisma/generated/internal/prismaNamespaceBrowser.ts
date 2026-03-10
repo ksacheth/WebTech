@@ -51,6 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Department: 'Department',
+  Batch: 'Batch',
+  ExamEligibility: 'ExamEligibility',
   User: 'User',
   Exam: 'Exam',
   ExamAttempt: 'ExamAttempt',
@@ -77,12 +80,53 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  code: 'code',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
+export const BatchScalarFieldEnum = {
+  id: 'id',
+  departmentId: 'departmentId',
+  yearOfStudy: 'yearOfStudy',
+  intakeYear: 'intakeYear',
+  label: 'label',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BatchScalarFieldEnum = (typeof BatchScalarFieldEnum)[keyof typeof BatchScalarFieldEnum]
+
+
+export const ExamEligibilityScalarFieldEnum = {
+  id: 'id',
+  examId: 'examId',
+  batchId: 'batchId',
+  departmentId: 'departmentId',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type ExamEligibilityScalarFieldEnum = (typeof ExamEligibilityScalarFieldEnum)[keyof typeof ExamEligibilityScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   name: 'name',
   password: 'password',
   role: 'role',
+  departmentId: 'departmentId',
+  batchId: 'batchId',
+  rollNumber: 'rollNumber',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -186,10 +230,10 @@ export type SubmissionTestCaseResultScalarFieldEnum = (typeof SubmissionTestCase
 
 export const ProctoringLogScalarFieldEnum = {
   id: 'id',
+  attemptId: 'attemptId',
   violationType: 'violationType',
   details: 'details',
   snapshotUrl: 'snapshotUrl',
-  attemptId: 'attemptId',
   timestamp: 'timestamp'
 } as const
 
