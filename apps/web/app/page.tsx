@@ -20,7 +20,7 @@ export default function NITKProctoringPage() {
                       Secure Online Examination for NITK Excellence
                     </h1>
                     <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-normal leading-relaxed max-w-[540px]">
-                      Experience the next generation of academic integrity with centeralised lab Examinator website.
+                    Experience the next generation of academic integrity with a centralized lab examination platform.
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-4">
